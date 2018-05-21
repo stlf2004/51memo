@@ -1,0 +1,35 @@
+# Windows:
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Python:
+*.py[cod]
+*.so
+*.egg
+*.egg-info
+dist/
+build/
+__pycache__/
+
+# configurations:
+conf/
+cfg/
+*.cfg
+*.conf
+
+# logs:
+logs/
+log/
+*.log
+
+# data:
+db/
+data/
+*.db
+*.auth
+
+# doc
+export/
+*.xlsx
+*.docx
