@@ -121,7 +121,42 @@ def checkPassword(text):
             print(Color.red('密码不能为空，请重新输入。'))
 
 
+
+def cmdParser(cmd, argsMap):
+    """命令行传参分析程序"""
+    data = {}
+    for k,v in argsMap.items():
+        result = v['pattern'].search(cmd)
+        if result:
+            try:
+                value = result.group(1)
+                # print(value)
+                data.update({k: value})
+            except IndexError:
+                if k in {'-h','--help','help','?'}:
+                    value = 'Usage:\n'
+                    for opt,val in argsMap.items():
+                        value += opt+'\t'+val['comment']+'\n'
+                    data.update({k: value})
+                    return data
+                else:
+                    value = None
+                    data.update({k: value})
+    return data
+
+
 def main():
+    argsMap = {
+        '-h': {'comment': '帮助', 'pattern': re.compile(r'-h\s*$')},
+        '-u': {'comment': '用户名', 'pattern': re.compile(r'-u\s+(\S+)\s?')},
+        '-p': {'comment': '密码', 'pattern': re.compile(r'-p\s+(\S+)\s?')}
+    }
+    print(cmdParser('command -u lufei -p 123', argsMap))
+    # print(cmdParser('command -u lufei -p 123 ', argsMap))
+    # cmdParser('command -u lufei -p 123 -a', argsMap)
+    # print(cmdParser('command -h', argsMap))
+    # cmdParser('command -h ', argsMap)
+
 
     # api = apiReturn()
     # api['data'].update({'user': 'lufei'})
@@ -133,8 +168,8 @@ def main():
     # n = checkNum('请输入：')
     # print(n)
 
-    m = checkNumRange('请输入：', *range(10))
-    print(m)
+    # m = checkNumRange('请输入：', *range(10))
+    # print(m)
 
 
 
