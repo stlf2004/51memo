@@ -6,10 +6,10 @@
 # import functools
 import re
 
-
 # API返回成功、失败
 SUCCESS = 'success'
 FAILURE = 'failure'
+
 
 def apiReturn(status=0, message=SUCCESS, data={}):
     return {
@@ -17,8 +17,6 @@ def apiReturn(status=0, message=SUCCESS, data={}):
         'message': message,
         'data': data
     }
-
-
 
 
 # 打印颜色
@@ -62,7 +60,6 @@ class Color:
         return Color.BLINK + s + Color.CLOSE
 
 
-
 # 检查输入合法性
 def checkInput(text, *options):
     """检查输入合法性"""
@@ -76,7 +73,6 @@ def checkInput(text, *options):
             continue
 
 
-
 # 检查输入数字是否在指定的范围内
 def checkNumRange(text, *ran):
     while True:
@@ -86,7 +82,6 @@ def checkNumRange(text, *ran):
         else:
             print(Color.red('输入超出范围，请重新输入。'))
             continue
-
 
 
 # 检查输入是否为数字
@@ -111,6 +106,7 @@ def checkMail(text):
         else:
             print(Color.red('email地址不合法，请重新输入。'))
 
+
 def checkPassword(text):
     """检查密码输入是否为空"""
     while True:
@@ -121,11 +117,10 @@ def checkPassword(text):
             print(Color.red('密码不能为空，请重新输入。'))
 
 
-
 def cmdParser(cmd, argsMap):
     """命令行传参分析程序"""
     data = {}
-    for k,v in argsMap.items():
+    for k, v in argsMap.items():
         result = v['pattern'].search(cmd)
         if result:
             try:
@@ -133,10 +128,10 @@ def cmdParser(cmd, argsMap):
                 # print(value)
                 data.update({k: value})
             except IndexError:
-                if k in {'-h','--help','help','?'}:
+                if k in {'-h', '--help', 'help', '?'}:
                     value = 'Usage:\n'
-                    for opt,val in argsMap.items():
-                        value += opt+'\t'+val['comment']+'\n'
+                    for opt, val in argsMap.items():
+                        value += opt + '\t' + val['comment'] + '\n'
                     data.update({k: value})
                     return data
                 else:
@@ -148,15 +143,14 @@ def cmdParser(cmd, argsMap):
 def main():
     argsMap = {
         '-h': {'comment': '帮助', 'pattern': re.compile(r'-h\s*$')},
-        '-u': {'comment': '用户名', 'pattern': re.compile(r'-u\s+(\S+)\s?')},
-        '-p': {'comment': '密码', 'pattern': re.compile(r'-p\s+(\S+)\s?')}
+        '-u': {'comment': '用户名', 'pattern': re.compile(r'-u\s+\b(\S+)\b')},
+        '-p': {'comment': '密码', 'pattern': re.compile(r'-p\s+\b(\S+)\b')}
     }
-    print(cmdParser('command -u lufei -p 123', argsMap))
+    # print(cmdParser('command -u lufei -p 123', argsMap))
     # print(cmdParser('command -u lufei -p 123 ', argsMap))
-    # cmdParser('command -u lufei -p 123 -a', argsMap)
+    # print(cmdParser('command -u lufei -p 123 -a', argsMap))
     # print(cmdParser('command -h', argsMap))
-    # cmdParser('command -h ', argsMap)
-
+    print(cmdParser('command -h ', argsMap))
 
     # api = apiReturn()
     # api['data'].update({'user': 'lufei'})
@@ -171,8 +165,6 @@ def main():
     # m = checkNumRange('请输入：', *range(10))
     # print(m)
 
-
-
     # print(Color.red('hello'))
     # print(Color.green('hello'))
     # print(Color.yellow('hello'))
@@ -180,6 +172,7 @@ def main():
     # print(Color.purple('hello'))
     # print(Color.darkGreen('hello'))
     # print(Color.blink('hello'))
+
 
 if __name__ == '__main__':
     main()
