@@ -58,7 +58,7 @@ class MemoTime:
 
     def __init__(self, timeWord):
         self.timeWord = timeWord
-        self.timeFmt = '%Y-%m-%d %H:%M'  # TODO 从配置文件中读取时间格式
+        self.timeFmt = '%Y-%m-%d %H:%M'
         self.timeFmted = self.getTimeFmted()
 
     @staticmethod
@@ -66,9 +66,6 @@ class MemoTime:
         """英文时间字符串转中文"""
         if re.match(r'\d{4}-\d{1,2}-\d{1,2} \d{2}:\d{2}', s):
             return s.replace('-', '年', 1).replace('-', '月', 1).replace(' ', '日', 1)
-        if re.match(r'\d{4}/\d{1,2}/\d{1,2} \d{2}:\d{2}', s):
-            return s.replace('/', '年', 1).replace('/', '月', 1).replace(' ', '日', 1)
-        return s
 
     def getTimeFmted(self):  # 进一步完善时间提取功能
         now = datetime.now()
@@ -166,13 +163,6 @@ class MemoTime:
         else:
             return cls('明天').timeFmted
 
-
-    def convertTime(self):
-        """转换时间"""
-        try:
-            return MemoTime.en2cn((parse(self.timeWord).strftime(self.timeFmt)))
-        except:
-            return self.timeWord
 
 
 def main():

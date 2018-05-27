@@ -88,15 +88,9 @@ class MemoAdmin:
         try:
             if not entry:
                 raise ValueError('输入为空')
-            entry_list = entry.split(' ')
-            if len(entry_list) == 2:
-                entry_list[0] = MemoTime(entry_list[0]).convertTime()
-                self.ml.logger.debug('Splitting entry is successful.')
-                return entry_list
-            else:
-                date = MemoTime.extractTime(entry)  # 从字符串中提取日期返回标准格式
-                self.ml.logger.debug('Extracting date from the entry is successful.')
-                return date, entry
+            date = MemoTime.extractTime(entry)  # 从字符串中提取日期返回标准格式
+            self.ml.logger.debug('Extracting date from the entry is successful.')
+            return date, entry
         except ValueError:
             self.ml.logger.debug('The entry inputted is empty.')
             return 'empty'
@@ -150,7 +144,7 @@ class MemoAdmin:
     def add(self):
         """添加一条备忘事项"""
         while True:
-            entry_list = self.deal_entry(input('请依次输入时间、事件，以空格分隔，或者直接输入备忘事项：').strip())
+            entry_list = self.deal_entry(input('请输入备忘事项：').strip())
             if entry_list == 'empty':
                 print(Color.yellow('输入为空，请重新输入。'))
             else:
@@ -203,7 +197,7 @@ class MemoAdmin:
                 break
         index = id - 1
         while True:
-            entry_list = self.deal_entry(input('请依次输入时间、事件，以空格分隔，或者直接输入备忘事项：').strip())
+            entry_list = self.deal_entry(input('请输入备忘事项：').strip())
             if entry_list == 'empty':
                 print(Color.yellow('输入为空，请重新输入。'))
             else:
